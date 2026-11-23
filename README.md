@@ -15,6 +15,13 @@ python -m venv .venv
 pip install -e ".[dev]"
 ```
 
+The app loads settings from `.env` in the project root and will not start
+without a `SECRET_KEY` (used to sign JWTs). Create one:
+
+```powershell
+python -c "import secrets; from pathlib import Path; Path('.env').write_text('SECRET_KEY=' + secrets.token_hex(32))"
+```
+
 Start the development server from the project root:
 
 ```powershell
@@ -72,7 +79,6 @@ app/routers/       users and posts routers
 app/templates/     Jinja2 HTML templates
 app/static/        CSS, JavaScript, icons
 media/             uploaded profile pictures
-notes/             scratch files
 tests/             pytest suite
 ```
 
@@ -91,4 +97,5 @@ Tests set `DATABASE_URL` to a temp file before importing the app, so
 
 Authentication is a work in progress. `app/auth.py` has password hashing and
 JWT helpers, but there is no token endpoint yet and `password_hash` is still
-stored empty - posts are created by passing any `user_id`.
+stored empty - posts are created by passing any existing `user_id`.
+`POST /api/users` requires a `password` (8+ characters) but discards it.
