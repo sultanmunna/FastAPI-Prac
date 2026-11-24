@@ -81,6 +81,7 @@ async def post_details(request: Request, post_id: int, db: DbDep):
     )
 
 
+# This route is not part of the API, but is used to display a user's posts in a template.
 @app.get("/users/{user_id}/posts", include_in_schema=False, name="user_posts")
 async def user_posts_page(request: Request, user_id: int, db: DbDep):
     result = await db.execute(select(models.User).where(models.User.id == user_id))
