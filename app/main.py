@@ -104,12 +104,3 @@ async def user_posts_page(request: Request, user_id: int, db: DbDep):
         "user_posts.html",
         {"posts": posts, "user": user, "title": f"{user.username}'s Posts"},
     )
-
-
-@app.get("/about", include_in_schema=False, name="about")
-async def about(request: Request):
-    return templates.TemplateResponse(
-        request,
-        "about.html",
-        {"title": "About FastAPI Blog"},
-    )
